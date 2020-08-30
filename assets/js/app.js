@@ -1,12 +1,6 @@
 // @TODO: YOUR CODE HERE!
-// D3 Animated Scatter Plot
 
-// Section 1: Pre-Data Setup
-// ===========================
-// Before we code any data visualizations,
-// we need to at least set up the width, height and margins of the graph.
-// Note: I also added room for label text as well as text padding,
-// though not all graphs will need those specifications.
+
 
 // Grab the width and the height
 const width = parseInt(d3.select("#scatter").style("width"));
@@ -22,7 +16,7 @@ const labelArea = 110;
 const tPadBottom = 40;
 var tPadLeft = 40;
 
-// Create the actual canvas for the graph
+// Create canvas for the graph
 var svg = d3
   .select("#scatter")
   .append("svg")
@@ -53,9 +47,7 @@ svg.append("g").attr("class", "xText");
 // xText will allows us to select the group without excess code.
 const xText = d3.select(".xText");
 
-// We give xText a transform property that places it at the bottom of the chart.
-// By nesting this attribute in a function, we can easily change the location of the label group
-// whenever the width of the window changes.
+
 function xTextRefresh() {
   xText.attr(
     "transform",
@@ -97,14 +89,13 @@ xText
 // B) Left Axis
 // ============
 
-// Specifying the variables like this allows us to make our transform attributes more readable.
+// Specifying the variables 
 const leftTextX = margin + tPadLeft;
 const leftTextY = (height + labelArea) / 2 - labelArea;
 
-// We add a second label group, this time for the axis left of the chart.
+//  axis left of the chart.
 svg.append("g").attr("class", "yText");
 
-// yText will allows us to select the group without excess code.
 const yText = d3.select(".yText");
 
 //put transform attr in a function
@@ -116,7 +107,7 @@ function yTextRefresh() {
 }
 yTextRefresh();
 
-// Now we append the text.
+//  append the text.
 // 1. Obesity
 yText
   .append("text")
@@ -243,13 +234,13 @@ function visualize(theData) {
   }
 
   // Scatter Plot
-  // 
+
 
   // First grab the min and max values of x and y.
   xMinMax();
   yMinMax();
 
-  // create our scales.
+  // create scales.
 
 const xScale = d3
     .scaleLinear()
@@ -262,12 +253,11 @@ const xScale = d3
     .range([height - margin - labelArea, margin]);
 
   // We pass the scales into the axis methods to create the axes.
-  // Note: D3 4.0 made this a lot less cumbersome then before. Kudos to mbostock.
   const xAxis = d3.axisBottom(xScale);
   const yAxis = d3.axisLeft(yScale);
 
   // Determine x and y tick counts.
-  // Note: Saved as a function for easy mobile updates.
+  
   function tickerCount() {
     if (width <= 500) {
       xAxis.ticks(5);
@@ -295,10 +285,10 @@ const xScale = d3
   // Now let's make a grouping for our dots and their labels.
   const theCircles = svg.selectAll("g theCircles").data(theData).enter();
 
-  // We append the circles for each row of data (or each state, in this case).
+  // We append the circles for each row of data 
   theCircles
     .append("circle")
-    // These attr's specify location, size and class.
+ 
     .attr("cx", function(d) {
       return xScale(d[curX]);
     })
@@ -330,7 +320,7 @@ const xScale = d3
     .text(function(d) {
       return d.abbr;
     })
-    // Now place the text using our scale.
+  
     .attr("dx", function(d) {
       return xScale(d[curX]);
     })
@@ -430,9 +420,8 @@ const xScale = d3
             .duration(300);
         });
 
-        // We need change the location of the state texts, too.
+        // change the location of the state texts
         d3.selectAll(".stateText").each(function() {
-          // We give each state text the same motion tween as the matching circle.
           d3
             .select(this)
             .transition()
@@ -453,7 +442,7 @@ const xScale = d3
   d3.select(window).on("resize", resize);
 
   function resize() {
-    // Redefine the width, height and leftTextY (the three variables dependent on the width of the window).
+    // Redefine the width, height and leftTextY 
     width = parseInt(d3.select("#scatter").style("width"));
     height = width - width / 3.9;
     leftTextY = (height + labelArea) / 2 - labelArea;
